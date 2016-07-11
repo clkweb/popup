@@ -1,0 +1,70 @@
+<?php if ($block->getConfigValue('popup_options/cookie_info/cookie_status')): ?>
+    
+    <?php $cookieHours = is_numeric($block->getConfigValue('popup_options/cookie_info/hours')) ? $block->getConfigValue('popup_options/cookie_info/hours') : 24 ?>
+    <?php $cookieTitle = $block->getConfigValue('popup_options/cookie_info/title') ?>
+    <?php $cookieTitleColor = $block->getConfigValue('popup_options/cookie_info/title_color') ? '#' . $block->getConfigValue('popup_options/cookie_info/title_color') : '' ?>
+    <?php $cookieBackgroundColor = $block->getConfigValue('popup_options/cookie_info/background') ? '#' . $block->getConfigValue('popup_options/cookie_info/background') : '' ?>
+    <?php $popupTogglePosition = $block->getConfigValue('popup_options/settings_extra/toggle_position') ?>
+    <?php $popupNewsletterEnabled = $block->getConfigValue('popup_options/settings/popup_status') ?>
+    
+    <div class="cookie-info" style="display:none; <?php if ($popupTogglePosition == 'right' && $popupNewsletterEnabled) echo 'bottom: 60px;' ?>">
+        <input type="hidden" class="cookie-expires" value="<?php echo $cookieHours / 24 ?>"/>
+        <div class="cookie-text" style="display:none;">
+            <a class="cookie-text-close" href="javascript:;">x</a>
+            <span class="cookie-text-span"><?php echo $block->getConfigValue('popup_options/cookie_info/text') ?></span>
+        </div>
+        <div class="cookie-button-wrapper">
+                <span class="cookie-button" style="background: <?php echo $cookieBackgroundColor . '; color: ' . $cookieTitleColor ?> !important;">
+                    <?php echo $cookieTitle ?>
+                </span>
+            <a class="cookie-fancybox-close-toggle" style="box-sizing: border-box;" href="javascript:;">x</a>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        require(["jquery"], function ($) {
+            $(document).ready(function () {
+                var mobile = <?php echo $block->getConfigValue('popup_options/cookie_info/mobile') ?>;
+
+                if (mobile || (!mobile && !detectmob())) {
+                    showCookieText();
+                }
+            });
+
+            /**
+             * Displays cookie text.
+             */
+            function showCookieText() {
+                var checkCookie = readCookie('cookie-popup-status'),
+                    showCookieText = readCookie('cookie-popup-text'),
+                    expires = $('.cookie-expires').val(),
+                    delay = <?php echo $block->getConfigValue('popup_options/cookie_info/delay') ? $block->getConfigValue('popup_options/cookie_info/delay') : 5 ?>;
+
+                if (!checkCookie) {
+                    if (!showCookieText) {
+                        $('.cookie-text').css('display', '');
+                    }
+                    $('.cookie-info').slideToggle();
+                }
+
+                if (!showCookieText) {
+                    $('.cookie-text').width($('.cookie-button').width() + 28);
+                    setTimeout(function () {
+                        $('.cookie-text').slideToggle();
+                    }, delay * 1000)
+                    createCookie('cookie-popup-text', 'true', expires);
+                }
+
+                $('.cookie-text-close, .cookie-button').click(function () {
+                    $('.cookie-text').width($('.cookie-button').width() + 28);
+                    $('.cookie-text').slideToggle();
+                });
+
+                $('.cookie-fancybox-close-toggle').click(function () {
+                    createCookie('cookie-popup-status', 'true', expires);
+                    $('.cookie-info').slideToggle();
+                });
+            }
+        });
+    </script>
+<?php endif; ?>

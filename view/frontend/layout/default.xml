@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Clkweb_Popup::js/popup-functions.js" />
+        <css src="Clkweb_Popup::js/fancybox/css/jquery.fancybox.css" media="all" />
+    </head>
+
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Clkweb\Popup\Block\Popup" name="newsletter_popup" as="newsletter_popup" template="Clkweb_Popup::subscribe-popup.phtml" />
+            <block class="Clkweb\Popup\Block\Popup" name="cookie_popup" as="cookie_popup" template="Clkweb_Popup::cookie-popup.phtml" />
+            <block class="Clkweb\Popup\Block\Popup" name="third_popup" as="third_popup" template="Clkweb_Popup::third-popup.phtml" />
+        </referenceContainer>
+    </body>
+</page>

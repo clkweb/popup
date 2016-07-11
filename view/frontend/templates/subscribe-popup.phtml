@@ -1,0 +1,104 @@
+<?php if ($block->getConfigValue('popup_options/settings/popup_status')): ?>
+
+    <?php $img = $block->getConfigValue('popup_options/settings/upload_file') ?>
+    <?php $delay = is_numeric($block->getConfigValue('popup_options/settings/delay')) ? $block->getConfigValue('popup_options/settings/delay') : 5 ?>
+    <?php $nlButtonText = $block->getConfigValue('popup_options/settings/button_text') ? $block->getConfigValue('popup_options/settings/button_text') : 'Subscribe' ?>
+    <?php $nlButtonTextColor = $block->getConfigValue('popup_options/settings/button_text_color') ? '#' . $block->getConfigValue('popup_options/settings/button_text_color') : '' ?>
+    <?php $nlButtonColor = $block->getConfigValue('popup_options/settings/button_color') ? '#' . $block->getConfigValue('popup_options/settings/button_color') : '' ?>
+    <?php $hours = is_numeric($block->getConfigValue('popup_options/settings/hours')) ? $block->getConfigValue('popup_options/settings/hours') : 24 ?>
+
+    <div class="block block-subscribe popup" style="display:none;">
+        <div id="newsletter-popup">
+            <input type="hidden" class="expires" value="<?php echo $hours / 24 ?>"/>
+            <div class="nl-popup-form <?php if (empty($img)) { echo 'full-width'; } ?>" style="box-sizing:border-box;">
+                <div class="block-content"><?php echo $block->getConfigValue('popup_options/settings/top_text') ?></div>
+                <?php if ($block->getConfigValue('popup_options/settings/attribute_status')): ?>
+                    <form action="<?php echo $this->getUrl('newsletter/subscriber/new/') ?>" method="post" data-mage-init='{"validation": {}}'>
+                        <div class="block-content">
+                            <div class="newsletter-new clearfix">
+                                <label for="pnewsletter"><?php echo __('Email address') ?></label>
+                                <div class="input-box">
+                                    <input type="email" name="email" id="pnewsletter" title="<?php echo __('Sign up for our newsletter') ?>" class="input-text" data-validate="{required:true, 'validate-email':true}" placeholder="<?php echo __('Your email address...') ?>"/>
+                                </div>
+                                <div class="actions">
+                                    <button style="background: <?php echo $nlButtonColor . ' !important; color: ' . $nlButtonTextColor ?> !important;" type="submit" title="<?php echo __($nlButtonText) ?>" class="button"><?php echo __($nlButtonText) ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php endif; ?>
+                <div class="block-content bottom"><?php echo $block->getConfigValue('popup_options/settings/bottom_text') ?></div>
+            </div>
+            <?php if (!empty($img)): ?>
+                <div class="nl-img"><img alt="" src="<?php echo $block->getMediaUrl() . 'popup/' . $img ?>" /></div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <?php $popupToggleStatus = $block->getConfigValue('popup_options/settings_extra/toggle_status') ?>
+    <?php $popupToggleTitle = $block->getConfigValue('popup_options/settings_extra/toggle_title') ?>
+    <?php $popupToggleTitleColor = $block->getConfigValue('popup_options/settings_extra/toggle_title_color') ? '#' . $block->getConfigValue('popup_options/settings_extra/toggle_title_color') : '' ?>
+    <?php $popupToggleBackgroundColor = $block->getConfigValue('popup_options/settings_extra/toggle_background') ? '#' . $block->getConfigValue('popup_options/settings_extra/toggle_background') : '' ?>
+    <?php $popupTogglePosition = $block->getConfigValue('popup_options/settings_extra/toggle_position') ?>
+
+    <div class="subscribe-popup-toggle" style="display:none; <?php echo $popupTogglePosition . ':0;' ?>">
+        <div class="cookie-button-wrapper">
+            <span style="color:<?php echo $popupToggleTitleColor . ' !important; background:' . $popupToggleBackgroundColor ?> !important;">
+                <?php echo $popupToggleTitle ?>
+            </span>
+            <a class="fancybox-close-toggle" href="javascript:;" style="box-sizing: border-box;">x</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        require(["jquery", "fancybox"], function ($) {
+            $(document).ready(function() {
+
+                var checkCookie = readCookie('popup-shown'),
+                    checkCookieStatus = readCookie('popup-status'),
+                    showButton = readCookie('popup-button'),
+                    expires = $('.expires').val(),
+                    toggleButtonEnabled = <?php echo $popupToggleStatus ?>,
+                    mobile = <?php echo $block->getConfigValue('popup_options/settings_extra/toggle_mobile') ?>;
+
+                if (toggleButtonEnabled && (mobile || (!mobile && !detectmob()))) {
+
+                    $('.subscribe-popup-toggle a').click(function() {
+                        $('.subscribe-popup-toggle').slideToggle();
+                        createCookie('popup-shown', 'true', expires);
+                        createCookie('popup-button', 'true', expires);
+                    });
+
+                    $('.subscribe-popup-toggle span').click(function() {
+                        $.fancybox({
+                            padding: '0px',
+                            openEffect: 'elastic',
+                            closeEffect: 'elastic',
+                            centerOnScroll: true,
+                            type: 'inline',
+                            href: '#newsletter-popup',
+                            afterClose: function() {
+                                $('.subscribe-popup-toggle').slideToggle();
+                            }
+                        });
+                        $('.subscribe-popup-toggle').slideToggle();
+                    });
+
+                    if (checkCookieStatus && !showButton) {
+                        $('.subscribe-popup-toggle').slideToggle();
+                    }
+
+                    if (!checkCookie && !checkCookieStatus) {
+                        beginNewsletterForm(expires, <?php echo $delay * 1000 ?>);
+                    }
+                } else {
+
+                    if (!checkCookie) {
+                        createCookie('popup-shown', 'true', expires);
+                        beginNewsletterFormNoButton('#newsletter-popup', <?php echo $delay * 1000 ?>);
+                    }
+                }
+            });
+        });
+    </script>
+<?php endif; ?>

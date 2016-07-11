@@ -1,0 +1,58 @@
+<?php if ($block->getConfigValue('popup_options/popup3/popup3_status')): ?>
+    
+    <?php $img = $block->getConfigValue('popup_options/popup3/upload_file') ?>
+    <?php $nlButtonText = $block->getConfigValue('popup_options/popup3/button_text') ? $block->getConfigValue('popup_options/popup3/button_text') : 'Subscribe' ?>
+    <?php $nlButtonTextColor = $block->getConfigValue('popup_options/popup3/button_text_color') ? '#' . $block->getConfigValue('popup_options/popup3/button_text_color') : '' ?>
+    <?php $nlButtonColor = $block->getConfigValue('popup_options/popup3/button_color') ? '#' . $block->getConfigValue('popup_options/popup3/button_color') : '' ?>
+    <?php $hours = is_numeric($block->getConfigValue('popup_options/popup3/hours')) ? $block->getConfigValue('popup_options/popup3/hours') : 24 ?>
+    
+    <div class="block block-subscribe popup3" style="display:none;">
+        <div id="newsletter-popup3">
+            <input type="hidden" class="expires3" value="<?php echo $hours / 24 ?>"/>
+            <div class="nl-popup-form <?php if (empty($img)) { echo 'full-width'; } ?>" style="box-sizing:border-box;">
+                <div class="block-content"><?php echo $block->getConfigValue('popup_options/popup3/top_text') ?></div>
+                <?php if ($block->getConfigValue('popup_options/popup3/attribute_status')): ?>
+                    <form action="<?php echo $this->getUrl('newsletter/subscriber/new/') ?>" method="post" data-mage-init='{"validation": {}}'>
+                        <div class="block-content">
+                            <div class="newsletter-new clearfix">
+                                <label for="pnewsletter"><?php echo __('Email address') ?></label>
+                                <div class="input-box">
+                                    <input type="text" name="email" id="pnewsletter" title="<?php echo __('Sign up for our newsletter') ?>" class="input-text" data-validate="{required:true, 'validate-email':true}" placeholder="<?php echo __('Your email address...') ?>"/>
+                                </div>
+                                <div class="actions">
+                                    <button style="background: <?php echo $nlButtonColor . ' !important; color: ' . $nlButtonTextColor ?> !important;" type="submit" title="<?php echo __($nlButtonText) ?>" class="button"><?php echo __($nlButtonText) ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php endif; ?>
+                <div class="block-content bottom"><?php echo $block->getConfigValue('popup_options/popup3/bottom_text') ?></div>
+            </div>
+            <?php if (!empty($img)): ?>
+                <div class="nl-img"><img alt="" src="<?php echo $block->getMediaUrl() . 'popup/' . $img ?>" /></div>
+            <?php endif; ?>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        require(["jquery", "fancybox"], function () {
+            jQuery(document).ready(function() {
+
+                var checkCookie = readCookie('popup3-shown'),
+                    expires = jQuery('.expires3').val(),
+                    shown = false;
+
+                jQuery(document).bind("mouseleave", function(e) {
+                    if (e.pageY - jQuery(window).scrollTop() <= 1)
+                    {
+                        if (!checkCookie && !shown) {
+                            shown = true;
+                            createCookie('popup3-shown', 'true', expires);
+                            beginNewsletterFormNoButton('#newsletter-popup3', 0);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+<?php endif; ?>

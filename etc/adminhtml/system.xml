@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="clkweb" translate="label" sortOrder="300">
+            <label>Clkweb</label>
+        </tab>
+        <section id="popup_options" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Popup</label>
+            <tab>clkweb</tab>
+            <resource>Clkweb_Popup::popup</resource>
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Main popup</label>
+                <field id="popup_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable popup</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="top_text" translate="label" type="editor" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top text</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+                <field id="bottom_text" translate="label" type="editor" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bottom text</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+                <field id="upload_file" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Upload image</label>
+                    <comment>Recommended image size depends on text blocks height, 336px height or more and width same as height or more</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">popup</upload_dir>
+                    <base_url type="media" scope_info="1">popup</base_url>
+                </field>
+                <field id="attribute_status" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter form in popup</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="button_text" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button text</label>
+                </field>
+                <field id="button_text_color" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button text color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="button_color" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="seconds" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup delay in seconds</label>
+                    <comment>If no value entered then 5 sec will be default</comment>
+                </field>
+                <field id="hours" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup cookie lifetime in hours</label>
+                    <comment>If no value entered then 24 h will be default</comment>
+                </field>
+            </group>
+            <group id="settings_extra" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Main popup bottom button</label>
+                <field id="toggle_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable bottom button</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="toggle_title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
+                <field id="toggle_title_color" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="toggle_background" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Background color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="toggle_position" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Position</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Position</source_model>
+                </field>
+                <field id="toggle_mobile" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable on mobile</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+            </group>
+            <group id="cookie_info" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Bottom information block popup</label>
+                <field id="cookie_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable popup</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="text" translate="label" type="editor" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup text</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup button title</label>
+                </field>
+                <field id="title_color" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup button title color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="background" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup button background color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="hours" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup cookie lifetime in hours</label>
+                    <comment>If no value entered then 24 h will be default</comment>
+                </field>
+                <field id="delay" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup text delay</label>
+                    <comment>When popup text should hide, in seconds. If no value entered then 5 sec will be default</comment>
+                </field>
+                <field id="mobile" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable popup on mobile</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+            </group>
+            <group id="popup3" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Leave website popup</label>
+                <field id="popup3_status" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable / disable popup</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="top_text" translate="label" type="editor" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top text</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+                <field id="bottom_text" translate="label" type="editor" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bottom text</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Editor</frontend_model>
+                </field>
+                <field id="upload_file" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Upload image</label>
+                    <comment>Recommended image size depends on text blocks height, 336px height or more and width same as height or more</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">popup</upload_dir>
+                    <base_url type="media" scope_info="1">popup</base_url>
+                </field>
+                <field id="attribute_status" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter form in popup</label>
+                    <source_model>Clkweb\Popup\Model\Config\Source\Enable</source_model>
+                </field>
+                <field id="button_text" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button text</label>
+                </field>
+                <field id="button_text_color" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button text color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="button_color" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter button color</label>
+                    <frontend_model>Clkweb\Popup\Block\Adminhtml\System\Config\Color</frontend_model>
+                </field>
+                <field id="hours" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup cookie lifetime in hours</label>
+                    <comment>If no value entered then 24 h will be default</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
